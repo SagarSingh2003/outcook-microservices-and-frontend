@@ -14,6 +14,7 @@ const emailSchema = z.string().email({ message: "Invalid email address" });
 const usernameSchema = z.string().min(2, { message: "username too short" });
 const passwordSchema = z.coerce.string()
 const authCookieOptions = {
+  //we will be storing cookies for 30 days
   maxAge: 30 * 24 * 60 * 60 * 1000 ,
   httpOnly: true,
   sameSite: "None",
@@ -85,9 +86,12 @@ const authController = {
         failiureMessageArr.push(password);
       }
 
-      return new ApiResponse(res).customError(402, {
-        message: failiureMessageArr,
-      });
+      let failiureMsg = "";
+
+      for(let i = 0 ; i < failiureMessageArr.length - 1; i++){
+          failiureMsg += failiureMessageArr[i];   
+      }
+      return new ApiResponse(res).customError(402,failiureMsg );
     }
   },
 

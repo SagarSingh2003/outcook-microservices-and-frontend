@@ -28,7 +28,7 @@ const authMiddleware = async (req, res, next) => {
           }
 
           req.userData = userData;
-
+          console.log("auth successful")
           next();
         } catch {
           return new ApiResponse(res).internalServerError(

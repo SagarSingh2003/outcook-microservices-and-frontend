@@ -66,6 +66,16 @@ class DatabaseService {
     }
   }
 
+  async findOneAndUpdate(model, query = {}, projection = {}) {
+    try {
+      const result = await model.findOneAndUpdate(query, projection);
+      return result;
+    } catch (error) {
+      console.error("Error finding document:", error);
+      throw error;
+    }
+  }
+
   async update(model, id, updateData) {
     try {
       const result = await model.findByIdAndUpdate(id, updateData, {
@@ -96,6 +106,16 @@ class DatabaseService {
       console.error("Error deleting document:", error);
       throw error;
     }
+  }
+
+  async findOneUserAndPopulate(model , query ={} , populateRefName){
+      try {
+         const result = await model.findOne(query).populate(populateRefName)
+         return result;
+      }catch(error){
+          console.error("Error deleting document:" , error);
+          throw error;
+      }
   }
 }
 
